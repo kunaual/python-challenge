@@ -3,13 +3,7 @@ import csv
 
 csvPath=os.path.join('Resources','budget_data.csv')
 outputFile=os.path.join('analysis','analysis.txt')
-#print(csvPath)
 
-#  * The total number of months included in the dataset
-#* The net total amount of "Profit/Losses" over the entire period
-#  * Calculate the changes in "Profit/Losses" over the entire period, then find the average of those changes
-#  * The greatest increase in profits (date and amount) over the entire period
-#  * The greatest decrease in losses (date and amount) over the entire period
 #initalize variables
 totalMth = 0
 netPLtot = 0
@@ -26,7 +20,7 @@ with open(csvPath) as budDataFile:
     budData_header = next(budDataReader)
 
     for row in budDataReader:
-        #print(row[0]+" "+row[1])
+
         currMth=row[0]
         currPL=int(row[1])
         if prevRowMth!='never': #not on the first row of data
@@ -40,11 +34,10 @@ with open(csvPath) as budDataFile:
                 greatestDecr = currChg
                 greatestDecrMth = currMth
 
-         #   print("not on first row of data")
+
 
         totalMth+=1
-        netPLtot+=int(row[1])
-        #print(row)
+        netPLtot+=int(row[1])#change this
 
         prevRowMth=currMth
         prevRowPL=currPL
