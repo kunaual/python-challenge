@@ -37,7 +37,7 @@ with open(csvPath) as budDataFile:
 
 
         totalMth+=1
-        netPLtot+=int(row[1])#change this
+        netPLtot+=currPL
 
         prevRowMth=currMth
         prevRowPL=currPL
@@ -50,6 +50,7 @@ txtTotPL=f"Total: ${netPLtot}"
 txtAvgC=f"Average Change:${round(avgChg/(totalMth-1),2)}"
 txtGrIn=f"Greatest Increase in Profits: {greatestIncMth} (${greatestInc})"
 txtGrDe=f"Greatest Decrease in Profits: {greatestDecrMth} (${greatestDecr})"
+
 with open(outputFile, "a") as output:
     print(txtheader, file=output)
     print(txtdivider, file=output)
