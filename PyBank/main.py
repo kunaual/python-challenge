@@ -18,7 +18,7 @@ with open(csvPath) as budDataFile:
     budDataReader = csv.reader(budDataFile,delimiter=',')
 
     budData_header = next(budDataReader)
-
+#  len(list(budDataReader)  use this for totalmths
     for row in budDataReader:
 
         currMth=row[0]
