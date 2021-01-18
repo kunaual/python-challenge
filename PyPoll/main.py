@@ -9,30 +9,24 @@ with open(filepath) as eleDataFile:
     eleDataReader = csv.reader(eleDataFile,delimiter=',')
 
     eleData_header = next(eleDataReader)
-    print(eleData_header)
-    
-   
+
     totalVotes = 0
     for row in eleDataReader:
-        #do stuff here
-        #print(row[2])
         cand=row[2]
         if cand in cand_dict:
             cand_dict[cand]=cand_dict[cand]+1 
         else:
             cand_dict[cand]=1
         totalVotes+=1
-        #if totalVotes>5:
+        #if totalVotes>5:  # for testing
         #    break
-    #totalVotes = len(list(eleDataReader))
-print(cand_dict)
 
 # set up text for results:
 txtheader="Election Results"
 txtdivider="-------------------------------"
 txtTotVotes=f"Total Votes: {totalVotes}"
-#df was ordered in value_counts, so 1st candidate is the one with the most votes
-txtWinner = f'Winner: ' #fixthis{candList_df["Candidate"][0]}'
+
+winner = "nobody"
 
 with open(outputFile, "a") as output:
     print(txtheader, file=output)
@@ -41,18 +35,29 @@ with open(outputFile, "a") as output:
     print(txtdivider)
     print(txtTotVotes, file=output)
     print(txtTotVotes)
-#    for row in candList_df.iterrows():
-        #fixthistxtCand =f'{row[1]["Candidate"]}: {round(row[1]["Pct"],2)}% ({row[1]["NumVotes"]})'
-#        print(txtCand)
-#        print(txtCand, file=output)
+    print(txtdivider, file=output)
+    print(txtdivider)
+    for cand, votes in cand_dict.items():
+        if winner=='nobody':
+            #on first cand, just set winner = this person
+            winner = cand
+        else:
+            #check if current cand has more votes than winner + update winner
+            if votes > cand_dict[winner]:
+                winner = cand
+        pct = (votes/totalVotes)*100
+        #:.3f to display just 3 decimal places for the %
+        txtCand =f'{cand}: {pct:.3f}% ({votes})'
+        print(txtCand)
+        print(txtCand, file=output)
 
     print(txtdivider, file=output)
     print(txtdivider)
+    txtWinner = f'Winner: {winner}'
     print(txtWinner, file=output)
     print(txtWinner)
     print(txtdivider, file=output)
     print(txtdivider)
-
 
 # another solution using pandas:
 # could simply read file to df, use value_counts to count the votes, order it and put results in new df. (below code)
