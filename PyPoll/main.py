@@ -9,13 +9,25 @@ with open(filepath) as eleDataFile:
     eleDataReader = csv.reader(eleDataFile,delimiter=',')
 
     eleData_header = next(eleDataReader)
-    totalVotes = len(list(eleDataReader))
-    print(totalVotes)
-    for row in range(5):#eleDataReader:
+    print(eleData_header)
+    
+   
+    totalVotes = 0
+    for row in eleDataReader:
         #do stuff here
-        something = row
+        #print(row[2])
+        cand=row[2]
+        if cand in cand_dict:
+            cand_dict[cand]=cand_dict[cand]+1 
+        else:
+            cand_dict[cand]=1
+        totalVotes+=1
+        #if totalVotes>5:
+        #    break
+    #totalVotes = len(list(eleDataReader))
+print(cand_dict)
 
-# set up text results:
+# set up text for results:
 txtheader="Election Results"
 txtdivider="-------------------------------"
 txtTotVotes=f"Total Votes: {totalVotes}"
@@ -42,8 +54,8 @@ with open(outputFile, "a") as output:
     print(txtdivider)
 
 
-# would argue this is easier using pandas.
-# could simply build a df, use value_counts to count the votes, order it (below code) and put results in new df.
+# another solution using pandas:
+# could simply read file to df, use value_counts to count the votes, order it and put results in new df. (below code)
 # Then can iterate through the candList_df to show the results, the 1st cand would be the winner when ordered descending (ascending=False)
 #import pandas as pd
 #eldata_df = pd.read_csv(filepath, encoding ='UTF-8')
